@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 ///
 import '../../../models/task.dart';
-import '../../../utils/colors.dart';
+import '../../../utils/app_color.dart';
 import '../../../view/tasks/task_view.dart';
 
 class TaskWidget extends StatefulWidget {
@@ -57,14 +57,9 @@ class _TaskWidgetState extends State<TaskWidget> {
         decoration: BoxDecoration(
             color: widget.task.isCompleted
                 ? const Color.fromARGB(154, 119, 144, 229)
-                : Colors.white,
+                : AppColor.primaryColor,
             borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black.withOpacity(.1),
-                  offset: const Offset(0, 4),
-                  blurRadius: 10)
-            ]),
+            boxShadow: AppColor.neoBoxShadow),
         child: ListTile(
 
             /// Check icon
@@ -77,7 +72,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 duration: const Duration(milliseconds: 600),
                 decoration: BoxDecoration(
                     color: widget.task.isCompleted
-                        ? MyColors.primaryColor
+                        ? AppColor.primaryColor
                         : Colors.white,
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.grey, width: .8)),
@@ -94,9 +89,7 @@ class _TaskWidgetState extends State<TaskWidget> {
               child: Text(
                 taskControllerForTitle.text,
                 style: TextStyle(
-                    color: widget.task.isCompleted
-                        ? MyColors.primaryColor
-                        : Colors.black,
+                    color: Colors.white,
                     fontWeight: FontWeight.w500,
                     decoration: widget.task.isCompleted
                         ? TextDecoration.lineThrough
@@ -111,9 +104,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 Text(
                   taskControllerForSubtitle.text,
                   style: TextStyle(
-                    color: widget.task.isCompleted
-                        ? MyColors.primaryColor
-                        : const Color.fromARGB(255, 164, 164, 164),
+                    color: Colors.white,
                     fontWeight: FontWeight.w300,
                     decoration: widget.task.isCompleted
                         ? TextDecoration.lineThrough
@@ -135,20 +126,16 @@ class _TaskWidgetState extends State<TaskWidget> {
                         Text(
                           DateFormat('hh:mm a')
                               .format(widget.task.createdAtTime),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 14,
-                              color: widget.task.isCompleted
-                                  ? Colors.white
-                                  : Colors.grey),
+                              color: Colors.white),
                         ),
                         Text(
                           DateFormat.yMMMEd()
                               .format(widget.task.createdAtDate),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 12,
-                              color: widget.task.isCompleted
-                                  ? Colors.white
-                                  : Colors.grey),
+                              color: Colors.white),
                         ),
                       ],
                     ),

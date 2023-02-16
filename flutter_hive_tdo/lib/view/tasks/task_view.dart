@@ -2,12 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_hive_tdo/utils/custom_button.dart';
 import 'package:intl/intl.dart';
 
 ///
 import '../../main.dart';
 import '../../models/task.dart';
-import '../../utils/colors.dart';
+import '../../utils/app_color.dart';
 import '../../utils/constanst.dart';
 import '../../utils/strings.dart';
 
@@ -138,30 +139,32 @@ class _TaskViewState extends State<TaskView> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: const MyAppBar(),
-        body: SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: Center(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  /// new / update Task Text
-                  _buildTopText(textTheme),
+    return SafeArea(
+      child: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+          backgroundColor: AppColor.primaryColor,
+          appBar: const MyAppBar(),
+          body: SizedBox(
+            width: double.infinity,
+            height: double.infinity,
+            child: Center(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    /// new / update Task Text
+                    _buildTopText(textTheme),
 
-                  /// Middle Two TextFileds, Time And Date Selection Box
-                  _buildMiddleTextFieldsANDTimeAndDateSelection(
-                      context, textTheme),
+                    /// Middle Two TextFileds, Time And Date Selection Box
+                    _buildMiddleTextFieldsANDTimeAndDateSelection(
+                        context, textTheme),
 
-                  /// All Bottom Buttons
-                  _buildBottomButtons(context),
-                ],
+                    /// All Bottom Buttons
+                    _buildBottomButtons(context),
+                  ],
+                ),
               ),
             ),
           ),
@@ -183,43 +186,13 @@ class _TaskViewState extends State<TaskView> {
               ? Container()
 
               /// Delete Task Button
-              : Container(
-                  width: 150,
-                  height: 55,
-                  decoration: BoxDecoration(
-                      border:
-                          Border.all(color: MyColors.primaryColor, width: 2),
-                      borderRadius: BorderRadius.circular(15)),
-                  child: MaterialButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    minWidth: 150,
-                    height: 55,
-                    onPressed: () {
-                      deleteTask();
-                      Navigator.pop(context);
-                    },
-                    color: Colors.white,
-                    child: Row(
-                      children: const [
-                        Icon(
-                          Icons.close,
-                          color: MyColors.primaryColor,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          MyString.deleteTask,
-                          style: TextStyle(
-                            color: MyColors.primaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              : InkWell(
+                onTap: () {
+                  deleteTask();
+                  Navigator.pop(context);
+                },
+                child: const CustomButton(buttonText: MyString.deleteTask, textColor: Colors.red,)
+              ),
 
           /// Add or Update Task Button
           MaterialButton(
@@ -231,15 +204,9 @@ class _TaskViewState extends State<TaskView> {
             onPressed: () {
               isTaskAlreadyExistUpdateTask();
             },
-            color: MyColors.primaryColor,
-            child: Text(
-              isTaskAlreadyExistBool()
-                  ? MyString.addTaskString
-                  : MyString.updateTaskString,
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
+            child: CustomButton(buttonText:  isTaskAlreadyExistBool()
+                ? MyString.addTaskString
+                : MyString.updateTaskString, textColor: Colors.white,),
           ),
         ],
       ),
@@ -271,7 +238,7 @@ class _TaskViewState extends State<TaskView> {
                 controller: widget.taskControllerForTitle,
                 maxLines: 6,
                 cursorHeight: 60,
-                style: const TextStyle(color: Colors.black),
+                style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey.shade300),
@@ -302,12 +269,13 @@ class _TaskViewState extends State<TaskView> {
             child: ListTile(
               title: TextFormField(
                 controller: widget.taskControllerForSubtitle,
-                style: const TextStyle(color: Colors.black),
+                style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.bookmark_border, color: Colors.grey),
+                  prefixIcon: const Icon(Icons.bookmark_border, color: Colors.white),
                   border: InputBorder.none,
                   counter: Container(),
                   hintText: MyString.addNote,
+                  hintStyle: const TextStyle(color: Colors.white)
                 ),
                 onFieldSubmitted: (value) {
                   subtitle = value;
@@ -342,8 +310,8 @@ class _TaskViewState extends State<TaskView> {
               width: double.infinity,
               height: 55,
               decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.grey.shade300, width: 1),
+                color: AppColor.primaryColor,
+                border: Border.all(color: Colors.white, width: 1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
@@ -396,7 +364,7 @@ class _TaskViewState extends State<TaskView> {
               width: double.infinity,
               height: 55,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColor.primaryColor,
                 border: Border.all(color: Colors.grey.shade300, width: 1),
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -451,7 +419,7 @@ class _TaskViewState extends State<TaskView> {
                 text: isTaskAlreadyExistBool()
                     ? MyString.addNewTask
                     : MyString.updateCurrentTask,
-                style: textTheme.headline6,
+                style: const TextStyle(color: Colors.white, fontSize: 32),
                 children: const [
                   TextSpan(
                     text: MyString.taskStrnig,
@@ -481,29 +449,26 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 150,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  size: 50,
-                ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: Colors.white,
+                size: 40,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

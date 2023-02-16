@@ -1,7 +1,3 @@
-//? CodeWithFlexz on Instagram
-
-//* AmirBayat0 on Github
-//! Programming with Flexz on Youtube
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
