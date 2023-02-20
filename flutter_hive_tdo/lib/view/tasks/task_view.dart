@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_hive_tdo/utils/custom_button.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 ///
@@ -238,7 +239,7 @@ class _TaskViewState extends State<TaskView> {
                 controller: widget.taskControllerForTitle,
                 maxLines: 6,
                 cursorHeight: 60,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white, fontSize: 22),
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey.shade300),
@@ -269,14 +270,15 @@ class _TaskViewState extends State<TaskView> {
             child: ListTile(
               title: TextFormField(
                 controller: widget.taskControllerForSubtitle,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white, fontSize: 22),
                 decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.bookmark_border, color: Colors.white),
-                  border: InputBorder.none,
-                  counter: Container(),
-                  hintText: MyString.addNote,
-                  hintStyle: const TextStyle(color: Colors.white)
-                ),
+                    prefixIcon:
+                        const Icon(Icons.bookmark_border, color: Colors.white),
+                    border: InputBorder.none,
+                    counter: Container(),
+                    hintText: MyString.addNote,
+                    hintStyle:
+                        const TextStyle(color: Colors.white, fontSize: 22)),
                 onFieldSubmitted: (value) {
                   subtitle = value;
                 },
@@ -318,8 +320,8 @@ class _TaskViewState extends State<TaskView> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child:
-                        Text(MyString.timeString, style: textTheme.headline5),
+                    child: Text(MyString.timeString,
+                        style: TextStyle(fontSize: 18, color: Colors.white)),
                   ),
                   Expanded(child: Container()),
                   Container(
@@ -372,8 +374,8 @@ class _TaskViewState extends State<TaskView> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child:
-                        Text(MyString.dateString, style: textTheme.headline5),
+                    child: Text(MyString.dateString,
+                        style: TextStyle(color: Colors.white, fontSize: 18)),
                   ),
                   Expanded(child: Container()),
                   Container(
@@ -403,7 +405,7 @@ class _TaskViewState extends State<TaskView> {
   SizedBox _buildTopText(TextTheme textTheme) {
     return SizedBox(
       width: double.infinity,
-      height: 100,
+      height: 80,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -450,23 +452,29 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: const Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: Colors.white,
-                size: 40,
-              ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: Colors.white,
+              size: 40,
             ),
+          ),
+          SvgPicture.asset(
+            "assets/img/topolo-logo-light.svg",
+            semanticsLabel: 'Acme Logo',
+            width: 80,
+          ),
+          Expanded(child: Container()),
+          SvgPicture.asset(
+            "assets/img/topolo-icon-single-light.svg",
+            semanticsLabel: 'Acme Logo',
+            width: 60,
           ),
         ],
       ),
@@ -474,5 +482,5 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(100);
+  Size get preferredSize => const Size.fromHeight(90);
 }

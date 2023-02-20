@@ -14,7 +14,7 @@ class CustomButton extends StatelessWidget{
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: Container(
-        height: 50,
+        height: 60,
         width: buttonWith,
         padding: padding,
         decoration: BoxDecoration(
@@ -24,10 +24,20 @@ class CustomButton extends StatelessWidget{
         ),
         child: buttonText != null
             ? Center(
-              child: Padding(padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
-              child: Text(buttonText!, style: TextStyle(color: textColor, fontSize: 18),)),
-            )
-        :Center(child: const Icon(Icons.add, color: Colors.white,)),
+                child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
+                    child: Text(
+                      buttonText!,
+                      style: TextStyle(color: textColor, fontSize: 18),
+                    )),
+              )
+            : const Center(
+                child: Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 40,
+              )),
       ),
     );
   }

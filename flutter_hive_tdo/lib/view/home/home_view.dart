@@ -4,18 +4,19 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hive_tdo/utils/custom_button.dart';
+import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:lottie/lottie.dart';
-import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 
 ///
 import '../../main.dart';
 import '../../models/task.dart';
 import '../../utils/app_color.dart';
 import '../../utils/constanst.dart';
+import '../../utils/strings.dart';
 import '../../view/home/widgets/task_widget.dart';
 import '../../view/tasks/task_view.dart';
-import '../../utils/strings.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -104,10 +105,11 @@ class _HomeViewState extends State<HomeView> {
               children: [
                 /// CircularProgressIndicator
                 SizedBox(
-                  width: 25,
-                  height: 25,
+                  width: 36,
+                  height: 36,
                   child: CircularProgressIndicator(
-                    valueColor: const AlwaysStoppedAnimation(AppColor.primaryColor),
+                    valueColor:
+                        const AlwaysStoppedAnimation(AppColor.primaryColor),
                     backgroundColor: Colors.grey,
                     value: checkDoneTask(tasks) / valueOfTheIndicator(tasks),
                   ),
@@ -121,12 +123,14 @@ class _HomeViewState extends State<HomeView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(MyString.mainTitle, style: TextStyle(color: Colors.white, fontSize: 28)),
+                    const Text(MyString.mainTitle,
+                        style: TextStyle(color: Colors.white, fontSize: 28)),
                     const SizedBox(
                       height: 3,
                     ),
                     Text("${checkDoneTask(tasks)} of ${tasks.length} task",
-                        style: const TextStyle(color: Colors.white, fontSize: 18)),
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 22)),
                   ],
                 )
               ],
@@ -235,17 +239,34 @@ class _MyAppBarState extends State<MyAppBar> {
     var base = BaseWidget.of(context).dataStore.box;
     return Container(
       alignment: Alignment.centerRight,
-      padding: const EdgeInsets.only(right: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: GestureDetector(
         onTap: () {
           base.isEmpty
-              ? warningNoTask(context)
-              : deleteAllTask(context);
+              ? warningNoTask(context,
+                  "There is no Task For Delete!\n Try adding some and then try to delete it!")
+              : warningNoTask(context,
+                  "No Task Selected for Delete!\n Please select some task!");
         },
-        child: const Icon(
-          CupertinoIcons.trash,
-          color: Colors.white,
-          size: 40,
+        child: Row(
+          children: [
+            SvgPicture.asset(
+              "assets/img/topolo-logo-light.svg",
+              semanticsLabel: 'Acme Logo',
+              width: 80,
+            ),
+            Expanded(child: Container()),
+            SvgPicture.asset(
+              "assets/img/topolo-icon-single-light.svg",
+              semanticsLabel: 'Acme Logo',
+              width: 60,
+            ),
+            // const Icon(
+            //   CupertinoIcons.trash,
+            //   color: Colors.white,
+            //   size: 40,
+            // ),
+          ],
         ),
       ),
     );
@@ -270,7 +291,9 @@ class FAB extends StatelessWidget {
           ),
         );
       },
-      child: const CustomButton(buttonWith: 50,),
+      child: const CustomButton(
+        buttonWith: 60,
+      ),
     );
   }
 }

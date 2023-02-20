@@ -78,6 +78,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                     border: Border.all(color: Colors.grey, width: .8)),
                 child: const Icon(
                   Icons.check,
+                  size: 32,
                   color: Colors.white,
                 ),
               ),
@@ -91,6 +92,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
+                    fontSize: 24,
                     decoration: widget.task.isCompleted
                         ? TextDecoration.lineThrough
                         : null),
@@ -106,6 +108,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w300,
+                    fontSize: 20,
                     decoration: widget.task.isCompleted
                         ? TextDecoration.lineThrough
                         : null,
@@ -127,15 +130,13 @@ class _TaskWidgetState extends State<TaskWidget> {
                           DateFormat('hh:mm a')
                               .format(widget.task.createdAtTime),
                           style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.white),
+                              fontSize: 16, color: Colors.white),
                         ),
                         Text(
                           DateFormat.yMMMEd()
                               .format(widget.task.createdAtDate),
                           style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.white),
+                              fontSize: 14, color: Colors.white),
                         ),
                       ],
                     ),
